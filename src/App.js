@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { Navbar } from "./component/navbar";
+import { Route, Routes } from "react-router-dom";
+import { Home } from "./pages/home";
+import { Verified } from "./pages/verified";
+import { Write } from "./pages/write";
+import { Kategori } from "./pages/kategori";
+import { Post } from "./pages/post";
+import Auth from "./component/authentificationToKeepLogin";
+import { Profil } from "./pages/profil";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Auth>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/verification/:token" element={<Verified />} />
+          <Route
+            path="/verification-change-email/:token"
+            element={<Verified />}
+          />
+          <Route path="/write" element={<Write />} />
+          <Route path="/kategori/:id" element={<Kategori />} />
+          <Route path="/post/:id" element={<Post />} />
+          <Route path="/profile" element={<Profil />} />
+        </Routes>
+      </Auth>
     </div>
   );
 }
