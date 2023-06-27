@@ -25,7 +25,6 @@ export const AuthReducer = createSlice({
       localStorage.removeItem("token");
       document.location.href = "/";
     },
-
     setUser: (state, action) => {
       const { id, username, email, phone, imgProfile, isVerified, role } =
         action.payload;
@@ -83,10 +82,35 @@ export const changeData = (user, data) => {
           },
         }
       );
+      console.log(res.data);
       alert("User Name Terganti, Jangan Lupa Untuk Verifikasi Ulang");
       document.location.href = "/profile";
     } catch (error) {
       alert(error.response);
+    }
+  };
+};
+
+export const changeImage = (gambar) => {
+  return async () => {
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("file", gambar);
+    try {
+      const res = await axios.post(
+        `https://minpro-blog.purwadhikabootcamp.com/api/profile/single-uploaded`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res.data);
+      alert("Gambar Sudah Di Update");
+      // document.location.href = "/profile";
+    } catch (error) {
+      console.log(error.response);
     }
   };
 };

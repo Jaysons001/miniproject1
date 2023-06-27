@@ -5,8 +5,8 @@ import axios from "axios";
 import { getArticle } from "../redux/articleReducer";
 
 const Auth = ({ children }) => {
-  const [article, setArticle] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+  const [totalArticle, setTotalArticle] = useState(0);
   const dispatch = useDispatch();
 
   const fetchTotalPages = async () => {
@@ -15,53 +15,40 @@ const Auth = ({ children }) => {
         "https://minpro-blog.purwadhikabootcamp.com/api/blog?sort=ASC&page=1"
       );
       setTotalPages(res.data.page);
+      setTotalArticle(res.data.rows);
     } catch (error) {
       console.error("Error fetching total pages:", error);
     }
   };
 
-  const fetchDataForPage = async (pageIndex) => {
+  const fetchDataArticle = async () => {
     try {
       const res = await axios.get(
-        `https://minpro-blog.purwadhikabootcamp.com/api/blog?sort=ASC&page=${pageIndex}`
+        `https://minpro-blog.purwadhikabootcamp.com/api/blog?sort=DESC&page=1&size=${totalArticle}`
       );
-      return res.data.result;
-    } catch (error) {
-      console.error("Error fetching data for page", pageIndex, ":", error);
-      return [];
-    }
-  };
-
-  const fetchDataRecursive = async (pageIndex) => {
-    try {
-      const articlesForPage = await fetchDataForPage(pageIndex);
-      setArticle((prevArticles) => [...prevArticles, ...articlesForPage]);
-      dispatch(getArticle(articlesForPage));
-      if (pageIndex < totalPages) {
-        fetchDataRecursive(pageIndex + 1);
-      }
+      console.log(res.data.result);
+      dispatch(getArticle(res.data.result));
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
   const { user } = useSelector((state) => state.AuthReducer);
-
+  console.log(user);
   useEffect(() => {
     dispatch(checkLogin());
   }, [dispatch]);
 
   useEffect(() => {
     fetchTotalPages();
+
     // fetchUserData();
   }, []);
 
   useEffect(() => {
-    if (totalPages > 0) {
-      fetchDataRecursive(1);
-    }
+    fetchDataArticle();
   }, [totalPages]);
-
+  console.log(totalArticle);
   return <>{children}</>;
 };
 

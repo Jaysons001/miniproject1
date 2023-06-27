@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Heading, Image, Link, Text } from "@chakra-ui/react";
 import imageblur from "../imageblur.png";
+import { getArticle } from "../redux/articleReducer";
+import { Link as RouterLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 export const ImageCarosel = ({ url }) => {
   const [index, setIndex] = useState(0);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,27 +73,28 @@ export const ImageCarosel = ({ url }) => {
       >
         {">"}
       </Button>
-
-      <Image
-        borderRadius="30px"
-        src={`https://minpro-blog.purwadhikabootcamp.com/${url[index].imageURL}`}
-        alt="Image"
-        objectFit="cover"
-        w="100%"
-        h="100%"
-      />
-      <Image
-        borderRadius="30px"
-        src={imageblur}
-        alt="Blur Image"
-        objectFit="cover"
-        w="100%"
-        h="100%"
-        position="absolute"
-        top="0"
-        left="0"
-        zIndex="1"
-      />
+      <RouterLink to={`/post/${url[index].id}`}>
+        <Image
+          borderRadius="30px"
+          src={`https://minpro-blog.purwadhikabootcamp.com/${url[index].imageURL}`}
+          alt="Image"
+          objectFit="cover"
+          w="100%"
+          h="100%"
+        />
+        <Image
+          borderRadius="30px"
+          src={imageblur}
+          alt="Blur Image"
+          objectFit="cover"
+          w="100%"
+          h="100%"
+          position="absolute"
+          top="0"
+          left="0"
+          zIndex="1"
+        />
+      </RouterLink>
       <Box
         borderRadius="30px"
         position="absolute"
@@ -102,12 +107,15 @@ export const ImageCarosel = ({ url }) => {
         textAlign="left"
         maxWidth="70%"
       >
-        <Button colorScheme="red" borderRadius={"20px"} size={"xs"}>
-          {url[index].Category.name}
-        </Button>
-        <Link>
+        <RouterLink to={`/kategori/${url[index].Category.id}`}>
+          <Button colorScheme="red" borderRadius={"20px"} size={"xs"}>
+            {url[index].Category.name}
+          </Button>
+        </RouterLink>
+        <RouterLink to={`/post/${url[index].id}`}>
+          {" "}
           <Heading fontSize={"20px"}>{url[index].title}</Heading>
-        </Link>
+        </RouterLink>
         <Text fontSize="10px" pt="15px">
           Ditulis oleh <Link color={"red.500"}>{url[index].User.username}</Link>
         </Text>

@@ -4,14 +4,13 @@ import {
   Button,
   Flex,
   Heading,
-  IconButton,
   Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { SlLike as FcLike } from "react-icons/sl";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getArticle, likeArticle } from "../../redux/articleReducer";
 import { LoginModal } from "../login/signin";
@@ -39,22 +38,29 @@ const Articlecard = ({ article }) => {
     <Box width={"750px"} overflow={"hidden"}>
       <Flex height={"160px"} gap="20px">
         <Box width="250px" height={"100%"} style={{ flexShrink: 0 }}>
-          <Image
-            src={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
-            width="100%"
-            height={"100%"}
-            objectFit={"cover"}
-            fit={"cover"}
-            borderRadius={"10px"}
-          />
+          <Link
+            to={`/post/${article.id}`}
+            onClick={() => dispatch(getArticle(article))}
+          >
+            <Image
+              src={`https://minpro-blog.purwadhikabootcamp.com/${article.imageURL}`}
+              width="100%"
+              height={"100%"}
+              objectFit={"cover"}
+              fit={"cover"}
+              borderRadius={"10px"}
+            />
+          </Link>
         </Box>
         <Stack gap={"8px"}>
           <Flex gap={"8px"}>
-            <Button size={"xs"} width={"75px"} colorScheme="red">
-              {article.Category.name}
-            </Button>
-            <Button size={"xs"} colorScheme="red" onClick={cekLike}>
-              <FcLike fontSize={"15px"} />
+            <Link to={`/kategori/${article.Category.id}`}>
+              <Button size={"xs"} width={"75px"} colorScheme="red">
+                {article.Category.name}
+              </Button>
+            </Link>
+            <Button size={"xs"} colorScheme="red" my={"auto"} onClick={cekLike}>
+              <FcLike fontSize={"14px"} />
             </Button>
           </Flex>
           <Link

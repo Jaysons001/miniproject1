@@ -4,7 +4,6 @@ import { BsNewspaper } from "react-icons/bs";
 import Articlecard from "./articlecard";
 import axios from "axios";
 import { Pagination } from "./pagination";
-import { useSelector } from "react-redux";
 
 export const Article = () => {
   const [article, setArticle] = useState([]);

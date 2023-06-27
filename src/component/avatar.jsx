@@ -44,24 +44,19 @@ const LoginAva = () => {
             cursor={"pointer"}
             minW={"20px"}
           >
-            <Avatar size={"md"}>
-              {user.image ? (
-                <Image src={user.image} />
-              ) : (
-                <Image
-                  src={
-                    "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png"
-                  }
-                />
-              )}{" "}
-            </Avatar>
+            <Avatar
+              size={"md"}
+              src={`https://minpro-blog.purwadhikabootcamp.com/${user.imgProfile}`}
+            />
           </MenuButton>
           <MenuList>
             <Link to={"/profile"}>
               {" "}
               <MenuItem>Profile</MenuItem>
             </Link>
-            <MenuItem>Articles</MenuItem>
+            <Link to={"/artikelmu"}>
+              <MenuItem>Articles</MenuItem>
+            </Link>
             <MenuDivider />
             <MenuItem onClick={() => dispatch(logoutSuccess())}>
               Sign Out

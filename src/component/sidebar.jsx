@@ -11,12 +11,10 @@ export const Side = () => {
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        "https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav?orderBy=total_fav"
+        "https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav?orderBy=total_fav&page=1&size=10"
       );
-      const res1 = await axios.get(
-        "https://minpro-blog.purwadhikabootcamp.com/api/blog/pagFav?orderBy=total_fav&page=2"
-      );
-      setPopular([...res.data.result, ...res1.data.result]);
+
+      setPopular([...res.data.result]);
     } catch (error) {
       console.log("Error fetching data:", error);
     }
@@ -25,6 +23,8 @@ export const Side = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  console.log(popular);
 
   return (
     <Box mt={["10px", "30px", "55px"]}>
@@ -44,11 +44,9 @@ export const Side = () => {
             <Text mt="-5px">Top 10 Post</Text>
           </Flex>
           {popular &&
-            popular
-              .slice(0, 10)
-              .map((item, index) => (
-                <Sidebarpopularpost key={item.id} url={item} index={index} />
-              ))}
+            popular.map((item, index) => (
+              <Sidebarpopularpost key={item.id} url={item} index={index} />
+            ))}
         </Box>
       )}
     </Box>

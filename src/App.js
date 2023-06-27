@@ -11,9 +11,10 @@ import { Profil } from "./pages/profil";
 import { ForgotPassword } from "./pages/forgotPassword";
 import { AfterForgotPassword } from "./pages/forgotPasswordSetelah";
 import { Login } from "./pages/login";
+import { Artikelmu } from "./pages/articlemu";
 function App() {
   return (
-    <div>
+    <div className="App">
       <Auth>
         <Navbar />
         <Routes>
@@ -33,6 +34,7 @@ function App() {
             element={<AfterForgotPassword />}
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/artikelmu" element={<Artikelmu />} />
         </Routes>
       </Auth>
     </div>

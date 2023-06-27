@@ -1,8 +1,9 @@
 import { Box, Button, Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { BsFillPostcardFill } from "react-icons/bs";
 
-export const Sidebarpopularpost = ({ url, index }) => {
+export const Sidebarpopularpost = ({ url }) => {
   console.log(url);
   return (
     <Flex gap={"10px"} mt={"10px"}>
@@ -30,7 +31,7 @@ export const Sidebarpopularpost = ({ url, index }) => {
           fontWeight={"bold"}
           textAlign={"left"}
         >
-          {url.title}
+          <RouterLink to={`/post/${url.id}`}>{url.title}</RouterLink>
         </Link>
         <Text fontSize={"10px"} textAlign={"left"}>
           Disukai oleh: {url.total_fav} orang
