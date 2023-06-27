@@ -11,8 +11,8 @@ export const Navbar = () => {
     useSelector((state) => state.AuthReducer.user.token)
   );
   return (
-    <Box px={""} backgroundColor="#fe0000ff">
-      <Flex justify={"space-between"} mx={"170px"}>
+    <Box backgroundColor="#fe0000ff" width={"100%"}>
+      <Flex justify={"space-between"} mx={"170px"} backgroundColor="#fe0000ff">
         <Logo />
 
         <Menu />

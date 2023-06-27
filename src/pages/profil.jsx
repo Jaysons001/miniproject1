@@ -41,6 +41,11 @@ export const Profil = () => {
             <Text>Username : {user.username}</Text>
             <Text>Email : {user.email}</Text>
             <Text>Phone : {user.phone}</Text>
+            {user.isVerified ? (
+              <Text color={"green"}>Verified</Text>
+            ) : (
+              <Text color={"red"}>Not Verified</Text>
+            )}
           </Box>
           <Button colorScheme={"red"} onClick={handleOpenEdit}>
             Edit

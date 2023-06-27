@@ -6,7 +6,6 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  Link,
   ModalBody,
   ModalCloseButton,
   ModalHeader,
@@ -19,6 +18,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/AuthReducer";
+import { Link } from "react-router-dom";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -54,7 +54,7 @@ const login = async (values, dispatch) => {
   }
 };
 
-export const ModalLogin = () => {
+export const ModalLogin = ({ isOpen, onClose }) => {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -65,6 +65,10 @@ export const ModalLogin = () => {
       login(values, dispatch);
     },
   });
+
+  const handleForgotPassword = () => {
+    onClose();
+  };
 
   const dispatch = useDispatch();
 
@@ -120,7 +124,13 @@ export const ModalLogin = () => {
                   value={formik.values.password}
                 />
               </FormControl>
-
+              <Box ml={"auto"}>
+                <Link to={"/forgot-password"} onClick={handleForgotPassword}>
+                  <Text fontSize={"10px"} color={"red.600"}>
+                    Forgot Password?
+                  </Text>
+                </Link>
+              </Box>
               <Button type="submit" width="full" colorScheme="red">
                 Login
               </Button>

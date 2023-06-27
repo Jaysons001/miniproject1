@@ -8,9 +8,12 @@ import { Kategori } from "./pages/kategori";
 import { Post } from "./pages/post";
 import Auth from "./component/authentificationToKeepLogin";
 import { Profil } from "./pages/profil";
+import { ForgotPassword } from "./pages/forgotPassword";
+import { AfterForgotPassword } from "./pages/forgotPasswordSetelah";
+import { Login } from "./pages/login";
 function App() {
   return (
-    <div className="App">
+    <div>
       <Auth>
         <Navbar />
         <Routes>
@@ -24,6 +27,12 @@ function App() {
           <Route path="/kategori/:id" element={<Kategori />} />
           <Route path="/post/:id" element={<Post />} />
           <Route path="/profile" element={<Profil />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/reset-password/:token"
+            element={<AfterForgotPassword />}
+          />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Auth>
     </div>

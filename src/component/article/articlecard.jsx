@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Flex,
@@ -12,16 +13,27 @@ import React, { useEffect, useState } from "react";
 import { SlLike as FcLike } from "react-icons/sl";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getArticle } from "../../redux/articleReducer";
+import { getArticle, likeArticle } from "../../redux/articleReducer";
+import { LoginModal } from "../login/signin";
 const Articlecard = ({ article }) => {
   const [meta, setMeta] = useState(article.content);
   const dispatch = useDispatch();
-
+  // console.log(article);
   useEffect(() => {
     if (meta.length > 160) {
       return setMeta(meta.substring(0, 160) + "...");
     }
   }, []);
+
+  const cekLike = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      return dispatch(likeArticle(article.id));
+    } else {
+      alert("Login terlebih dahulu");
+      window.location.href = "/login";
+    }
+  };
 
   return (
     <Box width={"750px"} overflow={"hidden"}>
@@ -41,7 +53,7 @@ const Articlecard = ({ article }) => {
             <Button size={"xs"} width={"75px"} colorScheme="red">
               {article.Category.name}
             </Button>
-            <Button size={"xs"} colorScheme="red">
+            <Button size={"xs"} colorScheme="red" onClick={cekLike}>
               <FcLike fontSize={"15px"} />
             </Button>
           </Flex>
@@ -53,14 +65,21 @@ const Articlecard = ({ article }) => {
               {article.title}
             </Heading>
           </Link>
-          <Text
-            textAlign={"left"}
-            fontSize={"10px"}
-            fontWeight={"bold"}
-            color={"black"}
-          >
-            by <Link>{article.User.username}</Link>
-          </Text>
+          <Flex gap={"8px"}>
+            <Avatar
+              size={"xs"}
+              src={`https://minpro-blog.purwadhikabootcamp.com/${article.User.imgProfile}`}
+            />
+            <Text
+              textAlign={"left"}
+              fontSize={"10px"}
+              fontWeight={"bold"}
+              color={"black"}
+              my={"auto"}
+            >
+              by <Link>{article.User.username}</Link>
+            </Text>
+          </Flex>
           <Text fontSize={"12px"} color={"black"} textAlign={"left"}>
             {meta}
           </Text>

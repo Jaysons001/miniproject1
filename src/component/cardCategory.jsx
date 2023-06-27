@@ -13,9 +13,6 @@ export const CardCategory = ({ daftar }) => {
         backgroundColor={"red.500"}
         _hover={{
           backgroundColor: "red.600",
-          zoom: "120%",
-          padding: "5px",
-          alignContent: "center",
         }}
       >
         {daftar.name}

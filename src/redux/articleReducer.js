@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { json } from "react-router-dom";
 
 const initialState = {
   article: [],
@@ -18,15 +19,16 @@ export const ArticleReducer = createSlice({
 export const makeArticle = (data, file) => {
   return async () => {
     const token = localStorage.getItem("token");
-    console.log(token);
+    const formData = new FormData();
     console.log(data);
+    formData.append("data", JSON.stringify(data));
+    formData.append("file", file);
+
     try {
       const res = await axios.post(
         `https://minpro-blog.purwadhikabootcamp.com/api/blog`,
-        {
-          data: data,
-          file: file,
-        },
+        formData,
+
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -34,9 +36,32 @@ export const makeArticle = (data, file) => {
         }
       );
       alert("Blog Sudah Masuk");
-      // document.location.href = "/profile";
+      document.location.href = "/";
     } catch (error) {
-      alert(error);
+      console.log(error.response);
+    }
+  };
+};
+
+export const likeArticle = (articleId) => {
+  return async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await axios.post(
+        `https://minpro-blog.purwadhikabootcamp.com/api/blog/like`,
+        {
+          BlogId: articleId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      alert("article sudah di like");
+    } catch (error) {
+      alert(error.response.data.err);
     }
   };
 };

@@ -1,40 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Heading, Image, Link, Text } from "@chakra-ui/react";
 import imageblur from "../imageblur.png";
-export const ImageCarosel = ({ url, imageWidth }) => {
+export const ImageCarosel = ({ url }) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % url.length);
+      if (url.length > 0) {
+        setIndex((prevIndex) => (prevIndex + 1) % url.length);
+      }
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [index]);
+  }, [index, url]);
 
   const handleLeftClick = () => {
-    if (index === 0) {
-      setIndex(url.length - 1);
-    } else {
-      setIndex(index - 1);
+    if (url.length > 0) {
+      if (index === 0) {
+        setIndex(url.length - 1);
+      } else {
+        setIndex(index - 1);
+      }
     }
   };
 
   const handleRightClick = () => {
-    if (index === url.length - 1) {
-      setIndex(0);
-    } else {
-      setIndex(index + 1);
+    if (url.length > 0) {
+      if (index === url.length - 1) {
+        setIndex(0);
+      } else {
+        setIndex(index + 1);
+      }
     }
   };
 
-  const slideStyle = {
-    position: "relative",
-    width: "100%",
-    height: "100%",
-    transition: "transform 0.5s ease",
-    transform: `translateX(-${index * 100}%)`,
-  };
+  if (url.length === 0) {
+    return null;
+  }
 
   return (
     <Box
@@ -70,7 +72,7 @@ export const ImageCarosel = ({ url, imageWidth }) => {
 
       <Image
         borderRadius="30px"
-        src={url[index].img}
+        src={`https://minpro-blog.purwadhikabootcamp.com/${url[index].imageURL}`}
         alt="Image"
         objectFit="cover"
         w="100%"
@@ -101,13 +103,13 @@ export const ImageCarosel = ({ url, imageWidth }) => {
         maxWidth="70%"
       >
         <Button colorScheme="red" borderRadius={"20px"} size={"xs"}>
-          {url[index].kategori}
+          {url[index].Category.name}
         </Button>
         <Link>
           <Heading fontSize={"20px"}>{url[index].title}</Heading>
         </Link>
         <Text fontSize="10px" pt="15px">
-          Ditulis oleh <Link color={"red.500"}>{url[index].penulis}</Link>
+          Ditulis oleh <Link color={"red.500"}>{url[index].User.username}</Link>
         </Text>
       </Box>
     </Box>

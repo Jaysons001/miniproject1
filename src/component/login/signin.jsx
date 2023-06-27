@@ -16,7 +16,11 @@ export const LoginModal = ({ isOpen, onClose }) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent pb={"20px"}>
-        {isSign ? <ModalLogin /> : <ModalSignup />}
+        {isSign ? (
+          <ModalLogin isOpen={isOpen} onClose={onClose} />
+        ) : (
+          <ModalSignup isOpen={isOpen} onClose={onClose} />
+        )}
         <Text fontSize={"11px"} textAlign={"center"}>
           Belum Daftar/login?{" "}
           <Link color={"red.600"} onClick={() => setIsSign(!isSign)}>

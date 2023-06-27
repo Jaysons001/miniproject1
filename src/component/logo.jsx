@@ -1,24 +1,28 @@
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Image, Text, useMediaQuery } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 
 export const Logo = () => {
+  const [isLargerThanSm] = useMediaQuery("(min-width: 900px)");
+
   return (
     <Link to={"/"}>
       <Box
         display="flex"
         alignItems="center"
         fontFamily="Arial, sans-serif"
-        pt={"8px"}
+        my={"5px"}
       >
         <Image
-          height={"40px"}
+          height={["30px", "40px", "50px"]}
           src="https://gametekis.com/wp-content/uploads/2022/09/gametekis-copy-1.jpg"
           alt="gametekis"
         />
-        <Text ml={"10px"} fontWeight={"bold"} textColor="#ffffffff">
-          GAMETEKIS
-        </Text>
+        {isLargerThanSm && (
+          <Text fontWeight="bold" textColor="#ffffffff" ml={"10px"}>
+            GAMETEKIS
+          </Text>
+        )}
       </Box>
     </Link>
   );

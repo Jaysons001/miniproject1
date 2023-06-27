@@ -46,7 +46,7 @@ const Auth = ({ children }) => {
   };
 
   const { user } = useSelector((state) => state.AuthReducer);
-  console.log(user);
+
   useEffect(() => {
     dispatch(checkLogin());
   }, [dispatch]);

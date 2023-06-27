@@ -41,13 +41,14 @@ export const Write = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const data = {
       title: document.getElementById("title").value,
       content: document.getElementById("content").value,
-      keywords: document.getElementById("keywords").value,
-      CategoryId: selectedOption,
       country: document.getElementById("country").value,
+      CategoryId: selectedOption,
       url: "/",
+      keywords: document.getElementById("keywords").value,
     };
     const file = document.getElementById("file").files[0];
     dispatch(makeArticle(data, file));

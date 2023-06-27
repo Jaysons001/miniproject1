@@ -18,7 +18,7 @@ export const Article = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://minpro-blog.purwadhikabootcamp.com/api/blog?sort=ASC&page=${index}`
+        `https://minpro-blog.purwadhikabootcamp.com/api/blog?sort=DESC&page=${index}`
       );
       setArticle(response.data.result);
       setPage(response.data.page);
