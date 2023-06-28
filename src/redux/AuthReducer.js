@@ -63,7 +63,7 @@ export const checkLogin = () => {
     }
   };
 };
-export const changeData = (user, data) => {
+export const changeNama = (user, data) => {
   return async () => {
     const token = localStorage.getItem("token");
     console.log(token);
@@ -91,6 +91,52 @@ export const changeData = (user, data) => {
   };
 };
 
+export const changeEmail = (data) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await axios.patch(
+        `https://minpro-blog.purwadhikabootcamp.com/api/auth/changeEmail`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res.data);
+      alert("Email telah Terganti, Jangan Lupa Untuk Verifikasi Ulang");
+      dispatch(logoutSuccess());
+    } catch (error) {
+      alert(error.response.data);
+    }
+  };
+};
+
+export const changePassword = (data) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await axios.patch(
+        `https://minpro-blog.purwadhikabootcamp.com/api/auth/changePass`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res.data);
+      alert("Password Terganti, Jangan Lupa Untuk Verifikasi Ulang");
+      dispatch(logoutSuccess());
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
 export const changeImage = (gambar) => {
   return async () => {
     const token = localStorage.getItem("token");
@@ -108,7 +154,29 @@ export const changeImage = (gambar) => {
       );
       console.log(res.data);
       alert("Gambar Sudah Di Update");
-      // document.location.href = "/profile";
+      document.location.href = "/profile";
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
+export const changePhone = (data) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.patch(
+        `https://minpro-blog.purwadhikabootcamp.com/api/auth/changePhone`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res.data);
+      alert("Phone Number Terganti, Jangan Lupa Untuk Verifikasi Ulang");
+      document.location.href = "/profile";
     } catch (error) {
       console.log(error.response);
     }

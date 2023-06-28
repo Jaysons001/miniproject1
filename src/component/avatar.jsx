@@ -55,7 +55,10 @@ const LoginAva = () => {
               <MenuItem>Profile</MenuItem>
             </Link>
             <Link to={"/artikelmu"}>
-              <MenuItem>Articles</MenuItem>
+              <MenuItem>Artikel yang kamu tulis</MenuItem>
+            </Link>
+            <Link to={"/artikelsuka"}>
+              <MenuItem>Artikel yang kamu suka</MenuItem>
             </Link>
             <MenuDivider />
             <MenuItem onClick={() => dispatch(logoutSuccess())}>

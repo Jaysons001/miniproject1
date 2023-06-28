@@ -24,7 +24,6 @@ export const Verified = () => {
 
       alert(res.data.message);
       document.location.href = "/";
-      dispatch(loginSuccess(token));
     } catch (error) {
       alert(error.response.data.err.message);
     }

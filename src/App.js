@@ -12,6 +12,7 @@ import { ForgotPassword } from "./pages/forgotPassword";
 import { AfterForgotPassword } from "./pages/forgotPasswordSetelah";
 import { Login } from "./pages/login";
 import { Artikelmu } from "./pages/articlemu";
+import { Artikelsuka } from "./pages/artikelsuka";
 function App() {
   return (
     <div className="App">
@@ -29,6 +30,7 @@ function App() {
           <Route path="/post/:id" element={<Post />} />
           <Route path="/profile" element={<Profil />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/artikelsuka" element={<Artikelsuka />} />
           <Route
             path="/reset-password/:token"
             element={<AfterForgotPassword />}

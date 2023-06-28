@@ -4,7 +4,6 @@ import { Link as RouterLink } from "react-router-dom";
 import { BsFillPostcardFill } from "react-icons/bs";
 
 export const Sidebarpopularpost = ({ url }) => {
-  console.log(url);
   return (
     <Flex gap={"10px"} mt={"10px"}>
       <Box

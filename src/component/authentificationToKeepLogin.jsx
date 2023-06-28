@@ -15,6 +15,7 @@ const Auth = ({ children }) => {
         "https://minpro-blog.purwadhikabootcamp.com/api/blog?sort=ASC&page=1"
       );
       setTotalPages(res.data.page);
+      // console.log(res.data);
       setTotalArticle(res.data.rows);
     } catch (error) {
       console.error("Error fetching total pages:", error);
@@ -26,7 +27,7 @@ const Auth = ({ children }) => {
       const res = await axios.get(
         `https://minpro-blog.purwadhikabootcamp.com/api/blog?sort=DESC&page=1&size=${totalArticle}`
       );
-      console.log(res.data.result);
+      // console.log(res.data.result);
       dispatch(getArticle(res.data.result));
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -34,7 +35,7 @@ const Auth = ({ children }) => {
   };
 
   const { user } = useSelector((state) => state.AuthReducer);
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     dispatch(checkLogin());
   }, [dispatch]);
@@ -48,7 +49,7 @@ const Auth = ({ children }) => {
   useEffect(() => {
     fetchDataArticle();
   }, [totalPages]);
-  console.log(totalArticle);
+  // console.log(totalArticle);
   return <>{children}</>;
 };
 
