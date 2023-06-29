@@ -4,6 +4,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { BsFillPostcardFill } from "react-icons/bs";
 
 export const Sidebarpopularpost = ({ url }) => {
+  const title = url.title.replace(/ /g, "_");
+
   return (
     <Flex gap={"10px"} mt={"10px"}>
       <Box
@@ -14,14 +16,16 @@ export const Sidebarpopularpost = ({ url }) => {
         height="100px"
         style={{ flexShrink: 0 }}
       >
-        <Image
-          src={`https://minpro-blog.purwadhikabootcamp.com/${url.imageURL}`}
-          width="100%"
-          height="100%"
-          borderRadius={"10px"}
-          overflow={"hidden"}
-          objectFit={"cover"}
-        />
+        <RouterLink to={`/post/${url.id}?${title}`}>
+          <Image
+            src={`https://minpro-blog.purwadhikabootcamp.com/${url.imageURL}`}
+            width="100%"
+            height="100%"
+            borderRadius={"10px"}
+            overflow={"hidden"}
+            objectFit={"cover"}
+          />
+        </RouterLink>
       </Box>
       <Stack my={"10px"}>
         <Link
@@ -30,7 +34,7 @@ export const Sidebarpopularpost = ({ url }) => {
           fontWeight={"bold"}
           textAlign={"left"}
         >
-          <RouterLink to={`/post/${url.id}`}>{url.title}</RouterLink>
+          <RouterLink to={`/post/${url.id}?${title}`}>{url.title}</RouterLink>
         </Link>
         <Text fontSize={"10px"} textAlign={"left"}>
           Disukai oleh: {url.total_fav} orang

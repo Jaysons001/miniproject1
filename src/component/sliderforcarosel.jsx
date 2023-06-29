@@ -3,10 +3,10 @@ import { Box, Button, Heading, Image, Link, Text } from "@chakra-ui/react";
 import imageblur from "../imageblur.png";
 import { getArticle } from "../redux/articleReducer";
 import { Link as RouterLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 export const ImageCarosel = ({ url }) => {
   const [index, setIndex] = useState(0);
-  const dispatch = useDispatch();
+  const title = url[index]?.title.replace(/ /g, "_");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -73,7 +73,7 @@ export const ImageCarosel = ({ url }) => {
       >
         {">"}
       </Button>
-      <RouterLink to={`/post/${url[index].id}`}>
+      <RouterLink to={`/post/${url[index].id}?${title}`}>
         <Image
           borderRadius="30px"
           src={`https://minpro-blog.purwadhikabootcamp.com/${url[index].imageURL}`}
@@ -112,7 +112,7 @@ export const ImageCarosel = ({ url }) => {
             {url[index].Category.name}
           </Button>
         </RouterLink>
-        <RouterLink to={`/post/${url[index].id}`}>
+        <RouterLink to={`/post/${url[index].id}?${title}`}>
           {" "}
           <Heading fontSize={"20px"}>{url[index].title}</Heading>
         </RouterLink>

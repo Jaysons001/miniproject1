@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { makeArticle } from "../redux/articleReducer";
 
 export const Write = () => {
@@ -56,8 +56,10 @@ export const Write = () => {
 
   return (
     <Box mt={"50px"} align="center">
-      <Heading mb={"20px"}>=========== Mulai Menulis ===========</Heading>
       <Box width={"750px"}>
+        <Heading mb={"20px"} color={"red.600"} textAlign={"left"}>
+          Mulai Menulis
+        </Heading>
         <form onSubmit={handleSubmit}>
           <Input
             type="text"
@@ -87,7 +89,9 @@ export const Write = () => {
           <Input type="text" placeholder="Keyword" id="keywords" mb={"20px"} />
           <Input type="file" id="file" variant={"unstyled"} mb={"20px"} />
           <Input type="text" placeholder="Country?" id="country" mb={"20px"} />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" colorScheme="red" width={"100%"}>
+            Submit
+          </Button>
         </form>
       </Box>
     </Box>

@@ -39,7 +39,7 @@ import { EditEmail } from "./editEmail";
 export const Edit = ({ user }) => {
   return (
     <Box mt={"50px"} mx={"auto"} width={"750px"}>
-      <Tabs variant="soft-rounded" colorScheme="red">
+      <Tabs variant="soft-rounded" colorScheme="red" isFitted>
         <TabList>
           <Tab>Change Username</Tab>
           <Tab>Change Password</Tab>

@@ -23,6 +23,7 @@ export const AuthReducer = createSlice({
     logoutSuccess: (state) => {
       // state.user = initialState.user;
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       document.location.href = "/";
     },
     setUser: (state, action) => {
@@ -56,6 +57,7 @@ export const checkLogin = () => {
           }
         );
         dispatch(setUser(res.data));
+        localStorage.setItem("userId", res.data.id);
       } catch (error) {
         console.log(error);
         dispatch(logoutSuccess());

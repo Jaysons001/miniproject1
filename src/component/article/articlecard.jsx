@@ -9,20 +9,37 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { SlLike as FcLike } from "react-icons/sl";
-import { useDispatch } from "react-redux";
+import { SlLike as FcLike, SlDislike } from "react-icons/sl";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getArticle, likeArticle } from "../../redux/articleReducer";
-import { LoginModal } from "../login/signin";
+import {
+  dislikeArticle,
+  getArticle,
+  likeArticle,
+} from "../../redux/articleReducer";
+import axios from "axios";
 const Articlecard = ({ article }) => {
   const [meta, setMeta] = useState(article.content);
+  const urLike = useSelector((state) => state.articleReducer.urLike);
   const dispatch = useDispatch();
-  // console.log(article);
+  const title = article.title.replace(/ /g, "_");
+  const [liked, setLiked] = useState(false);
+  const [userId, setUserId] = useState(localStorage.getItem("userId") || null);
+  const [punyamu, setPunyamu] = useState(false);
+
   useEffect(() => {
+    const tes = urLike.some((item) => item.BlogId == article.id);
+    setLiked(tes);
+
     if (meta.length > 160) {
-      return setMeta(meta.substring(0, 160) + "...");
+      setMeta(meta.substring(0, 160) + "...");
     }
-  }, []);
+
+    if (userId == article.UserId) {
+      setPunyamu(true);
+    }
+    console.log(punyamu);
+  }, [article]);
 
   const cekLike = () => {
     const token = localStorage.getItem("token");
@@ -34,12 +51,35 @@ const Articlecard = ({ article }) => {
     }
   };
 
+  const handleDelete = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await axios.patch(
+        `https://minpro-blog.purwadhikabootcamp.com/api/blog/remove/${article.id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      alert("article telah dihapus");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const dislike = () => {
+    dispatch(dislikeArticle(article.id));
+  };
+
   return (
     <Box width={"750px"} overflow={"hidden"}>
       <Flex height={"160px"} gap="20px">
         <Box width="250px" height={"100%"} style={{ flexShrink: 0 }}>
           <Link
-            to={`/post/${article.id}`}
+            to={`/post/${article.id}?${title}`}
             onClick={() => dispatch(getArticle(article))}
           >
             <Image
@@ -59,14 +99,24 @@ const Articlecard = ({ article }) => {
                 {article.Category.name}
               </Button>
             </Link>
-            <Button size={"xs"} colorScheme="red" my={"auto"} onClick={cekLike}>
-              <FcLike fontSize={"14px"} />
-            </Button>
+
+            {liked ? (
+              <Button size={"xs"} colorScheme="red" onClick={dislike}>
+                {" "}
+                <SlDislike fontSize={"14px"} />
+              </Button>
+            ) : (
+              <Button
+                size={"xs"}
+                colorScheme="red"
+                my={"auto"}
+                onClick={cekLike}
+              >
+                <FcLike fontSize={"14px"} />
+              </Button>
+            )}
           </Flex>
-          <Link
-            to={`/post/${article.id}`}
-            onClick={() => dispatch(getArticle(article))}
-          >
+          <Link to={`/post/${article.id}?${title}`}>
             <Heading fontSize={"16px"} textAlign={"left"} color={"red.600"}>
               {article.title}
             </Heading>
@@ -89,6 +139,16 @@ const Articlecard = ({ article }) => {
           <Text fontSize={"12px"} color={"black"} textAlign={"left"}>
             {meta}
           </Text>
+          {punyamu ? (
+            <Button
+              size="xs"
+              width={"50px"}
+              colorScheme="red"
+              onClick={handleDelete}
+            >
+              delete?
+            </Button>
+          ) : null}
         </Stack>
       </Flex>
     </Box>

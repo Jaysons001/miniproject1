@@ -30,7 +30,7 @@ export const Verified = () => {
   }
 
   return (
-    <Box>
+    <Box mt={"50px"}>
       <Button onClick={takeToken}>Verified</Button>
     </Box>
   );

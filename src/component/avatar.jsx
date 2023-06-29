@@ -55,11 +55,12 @@ const LoginAva = () => {
               <MenuItem>Profile</MenuItem>
             </Link>
             <Link to={"/artikelmu"}>
-              <MenuItem>Artikel yang kamu tulis</MenuItem>
+              <MenuItem>Artikel</MenuItem>
             </Link>
             <Link to={"/artikelsuka"}>
               <MenuItem>Artikel yang kamu suka</MenuItem>
             </Link>
+
             <MenuDivider />
             <MenuItem onClick={() => dispatch(logoutSuccess())}>
               Sign Out

@@ -8,7 +8,7 @@ export const Carosel = () => {
   const fetch = async () => {
     try {
       const res = await axios.get(
-        `https://minpro-blog.purwadhikabootcamp.com/api/blog?sort=desc&page=1`
+        `https://minpro-blog.purwadhikabootcamp.com/api/blog?sort=desc&page=1&size=5`
       );
       setUrl(res.data.result);
     } catch (error) {

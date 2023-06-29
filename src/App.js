@@ -12,7 +12,8 @@ import { ForgotPassword } from "./pages/forgotPassword";
 import { AfterForgotPassword } from "./pages/forgotPasswordSetelah";
 import { Login } from "./pages/login";
 import { Artikelmu } from "./pages/articlemu";
-import { Artikelsuka } from "./pages/artikelsuka";
+import { Artikesuka } from "./pages/artikelsuka";
+import { Footer } from "./component/footer";
 function App() {
   return (
     <div className="App">
@@ -30,14 +31,15 @@ function App() {
           <Route path="/post/:id" element={<Post />} />
           <Route path="/profile" element={<Profil />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/artikelsuka" element={<Artikelsuka />} />
           <Route
             path="/reset-password/:token"
             element={<AfterForgotPassword />}
           />
           <Route path="/login" element={<Login />} />
           <Route path="/artikelmu" element={<Artikelmu />} />
+          <Route path="/artikelsuka" element={<Artikesuka />} />
         </Routes>
+        <Footer />
       </Auth>
     </div>
   );
