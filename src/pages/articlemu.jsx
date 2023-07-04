@@ -48,7 +48,7 @@ export const Artikelmu = () => {
   }, [index]);
 
   return (
-    <Flex mt={"50px"} justify={"center"}>
+    <Flex mt={"50px"} justify={"center"} minHeight={"750px"}>
       <Box>
         <Stack align={"left"} width={"750px"} gap={"20px"}>
           <Flex alignItems="center">
@@ -65,10 +65,12 @@ export const Artikelmu = () => {
             </Text>
             <Box flex="1" borderBottom={"1px solid red"} />
           </Flex>
-          {article &&
-            article.map((article) => (
-              <Articlecard key={article.id} article={article} />
-            ))}
+          <Stack minHeight={"750px"} gap={"20px"}>
+            {article &&
+              article.map((article) => (
+                <Articlecard key={article.id} article={article} />
+              ))}
+          </Stack>
           <Pagination page={totalPage} index={index} setIndex={setIndex} />
         </Stack>
       </Box>

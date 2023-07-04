@@ -7,6 +7,7 @@ import {
   FormLabel,
   Input,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -14,6 +15,7 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 
 export const AfterForgotPassword = () => {
+  const toast = useToast();
   const [isRequesting, setIsRequesting] = useState(false);
 
   async function takeToken(value) {
@@ -34,9 +36,16 @@ export const AfterForgotPassword = () => {
           },
         }
       );
-      alert("Oke, Silahkan login kembali");
-      console.log(res);
-      document.location.href = "/";
+      toast({
+        title: `Oke Silahkan Login Kembali`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+
+      setTimeout(() => {
+        document.location.href = "/";
+      }, 1500);
     } catch (error) {
       alert(error.response.data);
     }

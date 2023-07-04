@@ -19,7 +19,7 @@ export const ArticleReducer = createSlice({
   },
 });
 
-export const makeArticle = (data, file) => {
+export const makeArticle = (data, file, toast) => {
   return async () => {
     const token = localStorage.getItem("token");
     const formData = new FormData();
@@ -38,15 +38,27 @@ export const makeArticle = (data, file) => {
           },
         }
       );
-      alert("Berhasil Menulis Blog");
-      document.location.href = "/";
+      toast({
+        title: "Berhasil Menulis Artikel",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        document.location.href = "/";
+      }, 2000);
     } catch (error) {
-      console.log(error.response);
+      toast({
+        title: "Gagal Menulis, Silahkan dilengkapi",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 };
 
-export const likeArticle = (articleId) => {
+export const likeArticle = (articleId, toast) => {
   return async () => {
     const token = localStorage.getItem("token");
 
@@ -62,34 +74,51 @@ export const likeArticle = (articleId) => {
           },
         }
       );
-      alert("article sudah di like");
+      toast({
+        title: "Artikel Disukai",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     } catch (error) {
-      alert(error.response.data.err);
+      toast({
+        title: "Ada yang salah",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 };
 
-export const dislikeArticle = (articleId) => {
+export const dislikeArticle = (articleId, toast) => {
   return async () => {
     const token = localStorage.getItem("token");
     console.log(articleId);
 
     try {
-      const res = await axios.post(
-        `https://minpro-blog.purwadhikabootcamp.com/api/blog/unlike/2`,
-        {
-          BlogId: articleId,
-        },
+      const res = await axios.delete(
+        `https://minpro-blog.purwadhikabootcamp.com/api/blog/unlike/${articleId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      alert("article sudah di dislike");
+
+      toast({
+        title: "article sudah di dislike",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     } catch (error) {
-      console.log(error.response);
-      alert(error.response.data);
+      toast({
+        title: "article tidak bisa di dislike",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 };

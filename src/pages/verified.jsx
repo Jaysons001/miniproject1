@@ -1,4 +1,4 @@
-import { Box, Button, Toast } from "@chakra-ui/react";
+import { Box, Button, Toast, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
 import { loginSuccess } from "../redux/AuthReducer";
@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 
 export const Verified = () => {
   const dispatch = useDispatch();
-
+  const toast = useToast();
   async function takeToken() {
     const url = window.location.href.split("/");
     const token = url[url.length - 1];
@@ -21,16 +21,27 @@ export const Verified = () => {
           },
         }
       );
-
-      alert(res.data.message);
-      document.location.href = "/";
+      toast({
+        title: `${res.data.message}`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        document.location.href = "/";
+      }, 2000);
     } catch (error) {
-      alert(error.response.data.err.message);
+      toast({
+        title: `${error.response.data.err.message}`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   }
 
   return (
-    <Box mt={"50px"}>
+    <Box mt={"50px"} minHeight={"300px"}>
       <Button onClick={takeToken}>Verified</Button>
     </Box>
   );

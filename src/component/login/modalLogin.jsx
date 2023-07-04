@@ -16,6 +16,7 @@ import {
   Tabs,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useFormik } from "formik";
@@ -32,7 +33,7 @@ const LoginSchema = Yup.object().shape({
     .required("Password is required"),
 });
 
-const login = async (values, dispatch) => {
+const login = async (values, dispatch, toast) => {
   const { email, password, phone, username } = values;
 
   console.log(email, password, phone, username);
@@ -46,20 +47,29 @@ const login = async (values, dispatch) => {
         password: password,
       }
     );
-    console.log(res.data.token);
-    alert(res.data.message); //ingat buat popup gede
-    dispatch(loginSuccess(res.data.token));
-    document.location.href = "/";
+    toast({
+      title: "anda berhasil login",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+    setTimeout(() => {
+      dispatch(loginSuccess(res.data.token));
+      document.location.href = "/";
+    }, 2000);
   } catch (error) {
-    if (error) {
-      console.log(error.response.data.err);
-
-      alert(error.response.data.err); //ingat buat popup gede
-    }
+    // console.log(error.response.data.err);
+    toast({
+      title: `${error.response.data.err}`,
+      status: "warning",
+      duration: 3000,
+      isClosable: true,
+    });
   }
 };
 
 export const ModalLogin = ({ isOpen, onClose }) => {
+  const toast = useToast();
   const [activeTab, setActiveTab] = useState(0);
 
   const formik = useFormik({
@@ -72,7 +82,7 @@ export const ModalLogin = ({ isOpen, onClose }) => {
     validationSchema: LoginSchema,
     onSubmit: (values) => {
       console.log(values);
-      login(values, dispatch);
+      login(values, dispatch, toast);
     },
   });
 

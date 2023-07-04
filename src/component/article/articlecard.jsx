@@ -5,8 +5,17 @@ import {
   Flex,
   Heading,
   Image,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Stack,
   Text,
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { SlLike as FcLike, SlDislike } from "react-icons/sl";
@@ -18,7 +27,7 @@ import {
   likeArticle,
 } from "../../redux/articleReducer";
 import axios from "axios";
-const Articlecard = ({ article }) => {
+const Articlecard = ({ article, setStatus }) => {
   const [meta, setMeta] = useState(article.content);
   const urLike = useSelector((state) => state.articleReducer.urLike);
   const dispatch = useDispatch();
@@ -26,6 +35,8 @@ const Articlecard = ({ article }) => {
   const [liked, setLiked] = useState(false);
   const [userId, setUserId] = useState(localStorage.getItem("userId") || null);
   const [punyamu, setPunyamu] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
   useEffect(() => {
     const tes = urLike.some((item) => item.BlogId == article.id);
@@ -38,22 +49,28 @@ const Articlecard = ({ article }) => {
     if (userId == article.UserId) {
       setPunyamu(true);
     }
-    console.log(punyamu);
-  }, [article]);
+  }, [article, liked]);
 
   const cekLike = () => {
     const token = localStorage.getItem("token");
     if (token) {
-      return dispatch(likeArticle(article.id));
+      return dispatch(likeArticle(article.id, toast));
     } else {
-      alert("Login terlebih dahulu");
-      window.location.href = "/login";
+      toast({
+        title: "Login Terlebih Dahulu",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1500);
     }
   };
 
   const handleDelete = async () => {
     const token = localStorage.getItem("token");
-
     try {
       const res = await axios.patch(
         `https://minpro-blog.purwadhikabootcamp.com/api/blog/remove/${article.id}`,
@@ -64,14 +81,31 @@ const Articlecard = ({ article }) => {
           },
         }
       );
-      alert("article telah dihapus");
+      toast({
+        title: "Berhasil Menghapus Artikel",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        window.location = window.location.pathname;
+      }, 1500);
     } catch (error) {
+      toast({
+        title: `${error}`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        window.location = window.location.pathname;
+      }, 1500);
       console.log(error);
     }
   };
 
   const dislike = () => {
-    dispatch(dislikeArticle(article.id));
+    dispatch(dislikeArticle(article.id, toast));
   };
 
   return (
@@ -140,15 +174,31 @@ const Articlecard = ({ article }) => {
             {meta}
           </Text>
           {punyamu ? (
-            <Button
-              size="xs"
-              width={"50px"}
-              colorScheme="red"
-              onClick={handleDelete}
-            >
+            <Button size="xs" width={"50px"} colorScheme="red" onClick={onOpen}>
               delete?
             </Button>
           ) : null}
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Hapus Artikel?</ModalHeader>
+
+              <ModalCloseButton />
+              <ModalBody>
+                <Text>Apakah kamu yakin akan menghapus?</Text>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button colorScheme="red" mr={3} onClick={onClose}>
+                  Tidak
+                </Button>
+                <Button variant="ghost" onClick={handleDelete}>
+                  Iya
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+          ;
         </Stack>
       </Flex>
     </Box>

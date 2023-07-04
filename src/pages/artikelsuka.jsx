@@ -9,7 +9,6 @@ import { BsNewspaper } from "react-icons/bs";
 
 export const Artikesuka = () => {
   const { urLike } = useSelector((state) => state.articleReducer);
-
   const [article, setArticle] = useState([]);
 
   const getArticleLike = async (blogId) => {
@@ -17,7 +16,6 @@ export const Artikesuka = () => {
       const res = await axios.get(
         `https://minpro-blog.purwadhikabootcamp.com/api/blog/${blogId}`
       );
-      console.log(res.data);
       setArticle((prev) => [...prev, ...res.data]);
     } catch (error) {
       console.log(error);
@@ -31,7 +29,7 @@ export const Artikesuka = () => {
   }, [urLike]);
 
   return (
-    <Flex mt={"50px"} justify={"center"}>
+    <Flex mt={"50px"} justify={"center"} minHeight={"750px"}>
       <Box>
         <Stack align={"left"} width={"750px"} gap={"20px"}>
           <Flex alignItems="center">

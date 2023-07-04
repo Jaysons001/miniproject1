@@ -17,6 +17,7 @@ import {
   Stack,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
@@ -29,6 +30,7 @@ export const Profil = () => {
   const [open, setOpen] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
+  const toast = useToast();
   const handleOpenEdit = () => {
     setOpen(!open);
   };
@@ -48,11 +50,11 @@ export const Profil = () => {
 
   function handleSubmitUpload() {
     const file = document.getElementById("file").files[0];
-    dispatch(changeImage(file));
+    dispatch(changeImage(file, toast));
   }
 
   return (
-    <Box mt={"50px"}>
+    <Box mt={"50px"} minHeight={"750px"}>
       <Heading mb={"50px"}>Profile Page {user.username}</Heading>
       <Flex margin={"auto"} width={"40%"} gap={"10%"}>
         <Box _hover={{ cursor: "pointer" }}>

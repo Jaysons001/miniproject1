@@ -18,6 +18,7 @@ import {
   Th,
   InputRightElement,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React from "react";
 import { changeNama } from "../redux/AuthReducer";
@@ -29,13 +30,13 @@ export const EditUserName = ({ user }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   const handleButtonClick = () => {
     onOpen();
   };
-
   const buttonClickUser = (check) => {
     setLoading(true);
-    dispatch(changeNama(user, username));
+    dispatch(changeNama(user, username, toast));
   };
 
   return (

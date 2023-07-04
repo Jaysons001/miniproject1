@@ -10,6 +10,7 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import React from "react";
@@ -18,6 +19,7 @@ import * as Yup from "yup";
 import { changeEmail } from "../redux/AuthReducer";
 
 export const EditEmail = ({ user }) => {
+  const toast = useToast();
   const dispatch = useDispatch();
   const emailSchema = Yup.object().shape({
     newEmail: Yup.string("")
@@ -33,7 +35,7 @@ export const EditEmail = ({ user }) => {
     },
     validationSchema: emailSchema,
     onSubmit: (values) => {
-      dispatch(changeEmail(values));
+      dispatch(changeEmail(values, toast));
     },
   });
 

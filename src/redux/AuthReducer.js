@@ -65,7 +65,7 @@ export const checkLogin = () => {
     }
   };
 };
-export const changeNama = (user, data) => {
+export const changeNama = (user, data, toast) => {
   return async () => {
     const token = localStorage.getItem("token");
     console.log(token);
@@ -84,16 +84,28 @@ export const changeNama = (user, data) => {
           },
         }
       );
-      console.log(res.data);
-      alert("User Name Terganti, Jangan Lupa Untuk Verifikasi Ulang");
-      document.location.href = "/profile";
+
+      toast({
+        title: "User Name Terganti Jangan Lupa Verifikasi Ulang",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        document.location.href = "/profile";
+      }, 2000);
     } catch (error) {
-      alert(error.response);
+      toast({
+        title: `${error.response}`,
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 };
 
-export const changeEmail = (data) => {
+export const changeEmail = (data, toast) => {
   return async (dispatch) => {
     const token = localStorage.getItem("token");
 
@@ -107,16 +119,27 @@ export const changeEmail = (data) => {
           },
         }
       );
-      console.log(res.data);
-      alert("Email telah Terganti, Jangan Lupa Untuk Verifikasi Ulang");
-      dispatch(logoutSuccess());
+      toast({
+        title: "Email Sudah Terganti Jangan Lupa Verifikasi Ulang",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        dispatch(logoutSuccess());
+      }, 2000);
     } catch (error) {
-      alert(error.response.data);
+      toast({
+        title: `${error.response.data}`,
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 };
 
-export const changePassword = (data) => {
+export const changePassword = (data, toast) => {
   return async (dispatch) => {
     const token = localStorage.getItem("token");
 
@@ -130,16 +153,27 @@ export const changePassword = (data) => {
           },
         }
       );
-      console.log(res.data);
-      alert("Password Terganti, Jangan Lupa Untuk Verifikasi Ulang");
-      dispatch(logoutSuccess());
+      toast({
+        title: "Password Sudah Terganti Jangan Lupa Verifikasi Ulang",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        dispatch(logoutSuccess());
+      }, 2000);
     } catch (error) {
-      console.log(error.response);
+      toast({
+        title: `${error.response}`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 };
 
-export const changeImage = (gambar) => {
+export const changeImage = (gambar, toast) => {
   return async () => {
     const token = localStorage.getItem("token");
     const formData = new FormData();
@@ -154,11 +188,23 @@ export const changeImage = (gambar) => {
           },
         }
       );
-      console.log(res.data);
-      alert("Gambar Sudah Di Update");
-      document.location.href = "/profile";
+
+      toast({
+        title: "Gambar Sudah Terganti",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        document.location.href = "/profile";
+      }, 2000);
     } catch (error) {
-      console.log(error.response);
+      toast({
+        title: "ada yang salah",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 };

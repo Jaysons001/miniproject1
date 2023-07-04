@@ -29,33 +29,17 @@ export const Post = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const res1 = await axios.get(
-        `https://minpro-blog.purwadhikabootcamp.com/api/blog?sortBy=title&size=1&search=${title}`
-      );
-
-      const totalSize = res1.data.rows;
-
       const res = await axios.get(
-        `https://minpro-blog.purwadhikabootcamp.com/api/blog?sortBy=title&size=${totalSize}&search=${title}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `https://minpro-blog.purwadhikabootcamp.com/api/blog/${ID}`
       );
+
+      setArticle(res.data[0]);
 
       const res2 = await axios.get(
         `https://minpro-blog.purwadhikabootcamp.com/api/blog?sort=desc&page=1&size=3`
       );
 
       setLatest(res2.data.result);
-
-      console.log(res.data);
-      res.data.result.map((item) => {
-        if (item.id == id) {
-          setArticle(item);
-        }
-      });
     } catch (error) {
       console.log(error.response);
     }
@@ -72,7 +56,7 @@ export const Post = () => {
   }
 
   return (
-    <Box mt={"50px"} width={"50%"} mx={"auto"}>
+    <Box mt={"50px"} width={"50%"} mx={"auto"} minHeight={"750px"}>
       <Heading mb={"20px"}>{article.title}</Heading>
       <Image
         width={"100%"}

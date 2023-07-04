@@ -12,6 +12,7 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import React from "react";
@@ -27,6 +28,7 @@ export const EditPassword = ({ user }) => {
   const handleClick1 = () => setShow1(!show1);
   const handleClick2 = () => setShow2(!show2);
   const handleClick3 = () => setShow3(!show3);
+  const toast = useToast();
 
   const passwordSchema = Yup.object().shape({
     currentPassword: Yup.string("")
@@ -54,7 +56,7 @@ export const EditPassword = ({ user }) => {
     },
     validationSchema: passwordSchema,
     onSubmit: (values) => {
-      dispatch(changePassword(values));
+      dispatch(changePassword(values, toast));
     },
   });
 

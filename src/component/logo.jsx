@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const Logo = () => {
-  const [isLargerThanSm] = useMediaQuery("(min-width: 900px)");
+  const [isLargerThanSm] = useMediaQuery("(min-width: 1200px)");
 
   return (
     <Link to={"/"}>

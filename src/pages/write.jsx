@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Flex,
   Heading,
   Input,
   Menu,
@@ -9,6 +10,7 @@ import {
   MenuList,
   Text,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -18,6 +20,7 @@ import { makeArticle } from "../redux/articleReducer";
 export const Write = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
+  const toast = useToast();
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -51,7 +54,7 @@ export const Write = () => {
       keywords: document.getElementById("keywords").value,
     };
     const file = document.getElementById("file").files[0];
-    dispatch(makeArticle(data, file));
+    dispatch(makeArticle(data, file, toast));
   };
 
   return (
@@ -87,7 +90,10 @@ export const Write = () => {
             </select>
           </Box>
           <Input type="text" placeholder="Keyword" id="keywords" mb={"20px"} />
-          <Input type="file" id="file" variant={"unstyled"} mb={"20px"} />
+          <Flex>
+            <Input type="file" id="file" variant={"unstyled"} mb={"20px"} />
+            <Text>Max File Upload 1MB</Text>
+          </Flex>
           <Input type="text" placeholder="Country?" id="country" mb={"20px"} />
           <Button type="submit" colorScheme="red" width={"100%"}>
             Submit

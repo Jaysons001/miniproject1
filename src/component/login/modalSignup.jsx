@@ -12,6 +12,7 @@ import {
   ModalHeader,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import React from "react";
 import { useFormik } from "formik";
@@ -42,6 +43,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 export const ModalSignup = () => {
+  const toast = useToast();
   const register = async (values) => {
     const { name, email, phone, password, confirmPassword } = values;
     try {
@@ -56,13 +58,25 @@ export const ModalSignup = () => {
           FE_URL: "http://localhost:3000", //cari cara supaya bisa auto
         }
       );
-      alert(res.data.message); //ingat buat popup gede
-      document.location.href = "/";
+
+      toast({
+        title: `${res.data.message}`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+
+      setTimeout(() => {
+        document.location.href = "/";
+      }, 2000);
     } catch (error) {
       if (error.response) {
-        console.log(error.response);
-
-        alert(error.response.data);
+        toast({
+          title: `${error.response.data}`,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
       }
     }
   };

@@ -5,6 +5,7 @@ import {
   InputLeftElement,
   Input,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { useState } from "react";
@@ -15,6 +16,7 @@ import Articlecard from "./article/articlecard";
 export const Search = () => {
   const [search, setSearch] = useState("");
   const [article, setArticle] = useState([]);
+  const toast = useToast();
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -27,7 +29,12 @@ export const Search = () => {
       );
       setArticle(res.data.result);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: "ada yang salah",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 

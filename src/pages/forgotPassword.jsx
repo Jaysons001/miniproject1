@@ -8,6 +8,7 @@ import {
   Heading,
   Input,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Field, Form, Formik, useFormik } from "formik";
@@ -15,6 +16,7 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 
 export const ForgotPassword = () => {
+  const toast = useToast();
   const [isRequesting, setIsRequesting] = useState(false);
 
   const validationSchema = Yup.object().shape({
@@ -39,8 +41,16 @@ export const ForgotPassword = () => {
           FE_URL: "http://localhost:3000",
         }
       );
-      alert("Password Reset Berhasil silahkan cek email");
-      document.location.href = "/";
+      toast({
+        title: `Password Reset Berhasil silahkan cek email`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+
+      setTimeout(() => {
+        document.location.href = "/";
+      }, 1500);
     } catch (error) {
       console.log("Error sending password reset:", error);
       console.log("Response:", error.response);
