@@ -6,6 +6,8 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  InputGroup,
+  InputRightElement,
   Link,
   ModalBody,
   ModalCloseButton,
@@ -19,6 +21,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import AuthReducer from "../../redux/AuthReducer";
+import { useState } from "react";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -43,6 +46,11 @@ const LoginSchema = Yup.object().shape({
 });
 
 export const ModalSignup = () => {
+  const [show1, setShow1] = useState(false);
+  const handleClick1 = () => setShow1(!show1);
+  const [show2, setShow2] = useState(false);
+  const handleClick2 = () => setShow2(!show2);
+
   const toast = useToast();
   const register = async (values) => {
     const { name, email, phone, password, confirmPassword } = values;
@@ -174,14 +182,21 @@ export const ModalSignup = () => {
                         )}
                       </Box>
                     </Flex>{" "}
-                    <Input
-                      id="password"
-                      name="password"
-                      type="password"
-                      variant="filled"
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
-                    />
+                    <InputGroup>
+                      <Input
+                        id="password"
+                        name="password"
+                        type={show1 ? "text" : "password"}
+                        variant="filled"
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
+                      />
+                      <InputRightElement width="4.5rem">
+                        <Button h="1.75rem" size="sm" onClick={handleClick1}>
+                          {show1 ? "Hide" : "Show"}
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
                   </FormControl>
 
                   <FormControl
@@ -211,14 +226,21 @@ export const ModalSignup = () => {
                           )}
                       </Box>
                     </Flex>
-                    <Input
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      type="password"
-                      variant="filled"
-                      onChange={formik.handleChange}
-                      value={formik.values.confirmPassword}
-                    />
+                    <InputGroup>
+                      <Input
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        type={show2 ? "text" : "password"}
+                        variant="filled"
+                        onChange={formik.handleChange}
+                        value={formik.values.confirmPassword}
+                      />
+                      <InputRightElement width="4.5rem">
+                        <Button h="1.75rem" size="sm" onClick={handleClick2}>
+                          {show2 ? "Hide" : "Show"}
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
                   </FormControl>
                 </Flex>
               </Box>

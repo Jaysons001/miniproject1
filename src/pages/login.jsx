@@ -48,16 +48,7 @@ export const Login = () => {
         <FormLabel>Password:</FormLabel>
         <Input type="password" id="password" />
       </FormControl>
-      <Text mt={4} fontSize={"11px"} textAlign={"right"}>
-        Belum Mendaftar?{" "}
-        <Link
-          color={"red.600"}
-          // onClick={() => setIsSign(!isSign)}
-        >
-          Gunakan Link ini
-        </Link>{" "}
-        !
-      </Text>
+
       <Button mt={4} colorScheme="red" onClick={() => handleLogin(dispatch)}>
         Login
       </Button>

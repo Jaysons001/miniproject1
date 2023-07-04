@@ -6,6 +6,8 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  InputGroup,
+  InputRightElement,
   ModalBody,
   ModalCloseButton,
   ModalHeader,
@@ -31,6 +33,9 @@ const LoginSchema = Yup.object().shape({
     .min(6, "Password must be 7 characters minimum")
     .max(15, "Password must be less than 16 character")
     .required("Password is required"),
+  email: Yup.string().email("Invalid email address format"),
+  phone: Yup.string().matches(/^[0-9]+$/, "Invalid phone number format"),
+  username: Yup.string().min(6, "Name Harus 6 Karakter"),
 });
 
 const login = async (values, dispatch, toast) => {
@@ -69,6 +74,9 @@ const login = async (values, dispatch, toast) => {
 };
 
 export const ModalLogin = ({ isOpen, onClose }) => {
+  const [show1, setShow1] = useState(false);
+  const handleClick1 = () => setShow1(!show1);
+
   const toast = useToast();
   const [activeTab, setActiveTab] = useState(0);
 
@@ -211,14 +219,21 @@ export const ModalLogin = ({ isOpen, onClose }) => {
                     </FormErrorMessage>
                   )}
                 </Flex>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  variant="filled"
-                  onChange={formik.handleChange}
-                  value={formik.values.password}
-                />
+                <InputGroup size="md">
+                  <Input
+                    id="password"
+                    name="password"
+                    type={show1 ? "text" : "password"}
+                    variant="filled"
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                  />
+                  <InputRightElement width="4.5rem">
+                    <Button h="1.75rem" size="sm" onClick={handleClick1}>
+                      {show1 ? "Hide" : "Show"}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
               </FormControl>
               <Box ml={"auto"} px={"17px"}>
                 <Link to={"/forgot-password"} onClick={handleForgotPassword}>

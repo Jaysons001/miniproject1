@@ -21,7 +21,7 @@ export const Post = () => {
   const [article, setArticle] = useState({});
   const urlID = window.location.href.split("?");
   const ID = urlID[0].split("/").pop();
-  const title = urlID[1].replaceAll("_", " ");
+  const title = urlID[1].replaceAll("-", " ");
   const dispatch = useDispatch();
   const [latest, setLatest] = useState([]);
 
